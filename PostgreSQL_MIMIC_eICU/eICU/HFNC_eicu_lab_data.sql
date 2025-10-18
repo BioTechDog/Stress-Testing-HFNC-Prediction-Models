@@ -37,8 +37,8 @@ lab_data_t0 AS (
         MAX(CASE WHEN lab.labname = 'O2 Sat (%)' THEN lab.labresult END) AS O2Sat_t0
     FROM eicuii.lab lab
     JOIN first_occurrence fo ON lab.patientunitstayid = fo.icustay_id
-    WHERE lab.labresultoffset < fo.vent_start + 1*60
-      AND lab.labresultoffset > fo.vent_start - 2*60
+    WHERE lab.labresultoffset < fo.vent_start + 0.1*60
+      AND lab.labresultoffset > fo.vent_start - 6*60
       AND lab.labname IN ('paO2', 'FiO2', 'paCO2', 'pH', 'O2 Sat (%)')
     GROUP BY fo.icustay_id, fo.vent_start,fo.vent_end,fo.oxygen_therapy_type,labtime_t0,second_oxygen_therapy_type, last_oxygen_therapy_type
 ),
@@ -54,8 +54,8 @@ lab_data_t1 AS (
         MAX(CASE WHEN lab.labname = 'O2 Sat (%)' THEN lab.labresult END) AS O2Sat_t1
     FROM eicuii.lab lab
     JOIN first_occurrence fo ON lab.patientunitstayid = fo.icustay_id
-    WHERE lab.labresultoffset < fo.vent_start + 4*60
-      AND lab.labresultoffset > fo.vent_start + 2*60
+    WHERE lab.labresultoffset < fo.vent_start + 3*60
+      AND lab.labresultoffset > fo.vent_start + 1*60
       AND lab.labname IN ('paO2', 'FiO2', 'paCO2', 'pH', 'O2 Sat (%)')
     GROUP BY fo.icustay_id, labtime_t1
 ),
@@ -68,8 +68,8 @@ nursecharting_data_t0 AS (
         MAX(CASE WHEN nc.nursingchartcelltypevallabel = 'Respiratory Rate' THEN nc.nursingchartvalue END) AS RR_t0
     FROM eicuii.nursecharting nc
     JOIN first_occurrence fo ON nc.patientunitstayid = fo.icustay_id
-    WHERE nc.nursingchartoffset < fo.vent_start + 1*60 
-      AND nc.nursingchartoffset > fo.vent_start - 2*60 
+    WHERE nc.nursingchartoffset < fo.vent_start + 0.1*60 
+      AND nc.nursingchartoffset > fo.vent_start - 6*60 
       AND nc.nursingchartcelltypevallabel IN ('Heart Rate', 'Respiratory Rate')
     GROUP BY fo.icustay_id,nursingcharttime_t0
 ),
@@ -82,8 +82,8 @@ nursecharting_data_t1 AS (
         MAX(CASE WHEN nc.nursingchartcelltypevallabel = 'Respiratory Rate' THEN nc.nursingchartvalue END) AS RR_t1
     FROM eicuii.nursecharting nc
     JOIN first_occurrence fo ON nc.patientunitstayid = fo.icustay_id
-    WHERE nc.nursingchartoffset < fo.vent_start + 4*60 
-      AND nc.nursingchartoffset > fo.vent_start + 2*60 
+    WHERE nc.nursingchartoffset < fo.vent_start + 3*60 
+      AND nc.nursingchartoffset > fo.vent_start + 1*60 
       AND nc.nursingchartcelltypevallabel IN ('Heart Rate', 'Respiratory Rate')
     GROUP BY fo.icustay_id, nursingcharttime_t1
 )
