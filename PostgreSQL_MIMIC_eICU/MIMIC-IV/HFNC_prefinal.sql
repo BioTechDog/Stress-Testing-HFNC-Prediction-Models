@@ -40,6 +40,6 @@ ON
 
 LEFT JOIN death d ON d.stay_id = resp.stay_id
 WHERE 
-	resp.bg_charttime BETWEEN resp.starttime AND (resp.starttime + INTERVAL '4 hours'); --(0, 2.5)
+	resp.bg_charttime BETWEEN resp.starttime AND (resp.starttime + INTERVAL '4 hours');
 
 
