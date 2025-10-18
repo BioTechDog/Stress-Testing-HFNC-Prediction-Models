@@ -20,7 +20,7 @@ WITH bg_filtered AS (
     ON
         bg.subject_id = t1.subject_id
     WHERE
-        bg.charttime BETWEEN (t1.starttime - INTERVAL '6 hour') AND (t1.starttime + INTERVAL '1 hour')
+        bg.charttime BETWEEN (t1.starttime - INTERVAL '6 hour') AND (t1.starttime + INTERVAL '0.1 hour')
 ),
 vitalsign_filtered AS (
     SELECT
@@ -40,7 +40,7 @@ vitalsign_filtered AS (
     ON
         vs.stay_id = t1.stay_id
     WHERE
-        vs.charttime BETWEEN (t1.starttime - INTERVAL '16 hour') AND (t1.starttime + INTERVAL '1 hour') --(-3, +1)
+        vs.charttime BETWEEN (t1.starttime - INTERVAL '6 hour') AND (t1.starttime + INTERVAL '0.1 hour')
 ),
 bg_closest AS (
     SELECT
@@ -101,7 +101,7 @@ sapsii AS (
     ON
         sap.subject_id = t1.subject_id
     WHERE
-        sap.starttime BETWEEN (t1.starttime - INTERVAL '24 hour') AND (t1.starttime + INTERVAL '3 hour') AND sap.subject_id = 18588165
+        sap.starttime BETWEEN (t1.starttime - INTERVAL '6 hour') AND (t1.starttime + INTERVAL '0.1 hour') AND sap.subject_id = 18588165
 ),
 
 flow AS (
@@ -118,7 +118,7 @@ flow AS (
 		f.subject_id = t1.subject_id
 	WHERE
 		f.flow_rate IS NOT NULL
--- 		AND f.charttime BETWEEN (t1.starttime - INTERVAL '16 hour') AND (t1.starttime + INTERVAL '3 hour')
+-- 		AND f.charttime BETWEEN (t1.starttime - INTERVAL '6 hour') AND (t1.starttime + INTERVAL '0.1 hour')
 )
 
 SELECT
